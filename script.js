@@ -1,4 +1,5 @@
 let table = document.querySelector("#tbody");
+let search = document.querySelector("#searchBar")
 let sortByPer = document.querySelector("#sortByPercentage");
 let sortByMkt = document.querySelector("#sortByMktCap");
 sortByPer.addEventListener("click", sortByPercentage);
@@ -12,7 +13,7 @@ async function renderTable() {
         data.forEach(element => {
             table.innerHTML += `
         <tr>
-       <td><div class="logoField"> <img class="logo" src="${element.image}">${element.name}</div></td>
+       <td><div class="logoField"> <img class="logo" src="${element.image}"><p>${element.name}</p></div></td>
         <td>${element.symbol.toUpperCase()}<td>
         <td>${"$ " + element.current_price}<td>
         <td>${element.total_volume}<td>
@@ -23,7 +24,7 @@ async function renderTable() {
 
     })
 }
-document.addEventListener("DOMContentLoaded",renderTable)
+document.addEventListener("DOMContentLoaded", renderTable)
 function sortByPercentage() {
     let i, x, y, switching, shouldSwitch;
     switching = true;
@@ -63,4 +64,17 @@ function sortByMktCap() {
             switching = true;
         }
     }
+}
+function searchFilter() {
+    for (let i = 0; i < table.rows.length; i++) {
+        if ((table.rows[i].getElementsByTagName("td")[0].getElementsByTagName("div")[0].getElementsByTagName("p")[0].textContent.toLowerCase().includes(search.value))) {
+            console.log(table.rows[i].getElementsByTagName("td")[0].getElementsByTagName("div")[0].getElementsByTagName("p")[0].textContent.toLowerCase(),search.value);
+table.rows[i].style.display="table-row";
+        }
+        else{
+table.rows[i].style.display="none";
+
+        }
+    }
+    console.log(search.value);
 }
